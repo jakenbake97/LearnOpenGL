@@ -1,6 +1,9 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "Shader.h"
 #include "../Dependencies/stb_image.h"
@@ -58,8 +61,6 @@ int main()
 		0, 1, 3, //first triangle
 		1, 2, 3  // second triangle
 	};
-
-	
 
 	unsigned int VBO, VAO, EBO; //Vertex Buffer Object, Vertex Array Object, Element Buffer Object
 	glGenBuffers(1, &VBO);
@@ -143,12 +144,22 @@ int main()
 	ourShader.use();
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
+	
+	unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+
 	float lerpPct = 0.0f;
 	// render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		// input
 		ProcessInput(window);
+
+		glm::mat4 trans = glm::mat4(1.0f);
+		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
 		// render commands
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
