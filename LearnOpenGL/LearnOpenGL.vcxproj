@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\stb_image.h" />
+    <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Shader.h" />
   </ItemGroup>
   <ItemGroup>
