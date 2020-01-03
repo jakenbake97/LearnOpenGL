@@ -151,6 +151,8 @@
     <ClInclude Include="Source\Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Source\Shaders\CubeLamp.frag" />
+    <None Include="Source\Shaders\CubeLamp.vert" />
     <None Include="Source\Shaders\fragmentShader.frag" />
     <None Include="Source\Shaders\vertexShader.vert" />
   </ItemGroup>

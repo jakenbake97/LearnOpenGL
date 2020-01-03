@@ -39,5 +39,7 @@
   <ItemGroup>
     <None Include="Source\Shaders\vertexShader.vert" />
     <None Include="Source\Shaders\fragmentShader.frag" />
+    <None Include="Source\Shaders\CubeLamp.vert" />
+    <None Include="Source\Shaders\CubeLamp.frag" />
   </ItemGroup>
 </Project>
