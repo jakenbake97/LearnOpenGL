@@ -252,15 +252,25 @@ int main()
 		lightPos.y = 1.0f + sin(glfwGetTime());
 
 		lightingShader.use();
-		lightingShader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
-		lightingShader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-		lightingShader.setVec3("lightPos", lightPos);
 		lightingShader.setVec3("viewPos", camera.Position);
 
-	/*	glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);*/
+		lightingShader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+		lightingShader.setFloat("material.shininess", 32.0f);
+
+		glm::vec3 lightColor;
+		lightColor.r = sin(glfwGetTime() * 2.0f);
+		lightColor.g = sin(glfwGetTime() * 0.7f);
+		lightColor.b = sin(glfwGetTime() * 1.3f);
+
+		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+		glm::vec3 ambientColor = lightColor * glm::vec3(0.2f);
+
+		lightingShader.setVec3("light.position", lightPos);
+		lightingShader.setVec3("light.ambient",ambientColor);
+		lightingShader.setVec3("light.diffuse", diffuseColor); // darken the light a bit to fit the scene
+		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
 		
 		glm::mat4 view = camera.GetViewMatrix();
