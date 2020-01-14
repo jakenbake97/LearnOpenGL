@@ -20,7 +20,6 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-
 void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
@@ -250,8 +249,6 @@ int main()
 		glClearColor(0.43f, 0.44f, 0.47f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		lightPos.y = 1.0f + sin(glfwGetTime());
-
 		lightingShader.use();
 		lightingShader.setVec3("viewPos", camera.Position);
 
@@ -263,11 +260,18 @@ int main()
 		glm::vec3 diffuseColor = lightColor * glm::vec3(0.6f);
 		glm::vec3 ambientColor = lightColor * glm::vec3(0.25f);
 
-		lightingShader.setVec3("light.position", lightPos);
+		lightingShader.setVec3("light.position",camera.Position);
+		lightingShader.setVec3("light.direction", camera.Front);
+		lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+		lightingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+
 		lightingShader.setVec3("light.ambient", ambientColor);
 		lightingShader.setVec3("light.diffuse", diffuseColor); // darken the light a bit to fit the scene
 		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
+		lightingShader.setFloat("light.constant", 1.0f);
+		lightingShader.setFloat("light.linear", 0.09f);
+		lightingShader.setFloat("light.quadratic", 0.032f);
 
 		glm::mat4 view = camera.GetViewMatrix();
 		lightingShader.setMat4("view", view);
@@ -276,7 +280,6 @@ int main()
 		lightingShader.setMat4("projection", projection);
 
 		glm::mat4 model = glm::mat4(1.0f);
-		lightingShader.setMat4("model", model);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, diffuseMap);
@@ -285,9 +288,19 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, specularMap);
 
 		glBindVertexArray(cubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		lampShader.use();
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, cubePositions[i]);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			lightingShader.setMat4("model", model);
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+
+		/*lampShader.use();
 		lampShader.setMat4("view", view);
 		lampShader.setMat4("projection", projection);
 
@@ -297,7 +310,7 @@ int main()
 		lampShader.setMat4("model", model);
 
 		glBindVertexArray(lampVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 36);*/
 
 		// check and call events and swap buffers
 		glfwPollEvents();
