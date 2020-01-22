@@ -9,8 +9,8 @@
 #include "Camera.h"
 #include "../Dependencies/stb_image.h"
 
-const unsigned int screen_width = 800;
-const unsigned int screen_height = 600;
+const unsigned int screen_width = 1920;
+const unsigned int screen_height = 1080;
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = screen_width / 2;
@@ -324,7 +324,7 @@ int main()
 		{
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
-			const float angle = 20.0f * i;
+			const float angle = 20.0f * static_cast<float>(i);
 			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 			lightingShader.SetMat4("model", model);
 
