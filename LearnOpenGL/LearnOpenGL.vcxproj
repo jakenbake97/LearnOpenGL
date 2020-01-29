@@ -144,10 +144,12 @@
     <ClCompile Include="Dependencies\glad.c" />
     <ClCompile Include="Dependencies\stb_image.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\stb_image.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Shader.h" />
   </ItemGroup>
   <ItemGroup>
