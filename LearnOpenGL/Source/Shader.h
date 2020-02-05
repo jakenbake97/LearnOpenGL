@@ -41,7 +41,7 @@ public:
 			vertexCode = vShaderStream.str();
 			fragmentCode = fShaderStream.str();
 		}
-		catch (std::ifstream::failure & e)
+		catch (std::ifstream::failure &e)
 		{
 			std::cout << "ERROR::SHADER::FILE NOT SUCCESSFULLY READ" << std::endl;
 		}
@@ -113,9 +113,9 @@ public:
 	{
 		glUniform1f(glGetUniformLocation(id, name.c_str()), value);
 	}
-	void SetMat4(const std::string& name, glm::mat4 value) const
+	void SetMat4(const std::string& name, const glm::mat4& value) const
 	{
-		glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+		glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &value[0][0]);
 	}
 	void SetVec3(const std::string& name, const glm::vec3& value) const
 	{
