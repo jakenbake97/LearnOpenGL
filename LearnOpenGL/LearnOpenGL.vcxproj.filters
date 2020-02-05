@@ -27,6 +27,9 @@
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Shader.h">
@@ -41,11 +44,16 @@
     <ClInclude Include="Source\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\vertexShader.vert" />
     <None Include="Source\Shaders\fragmentShader.frag" />
     <None Include="Source\Shaders\CubeLamp.vert" />
     <None Include="Source\Shaders\CubeLamp.frag" />
+    <None Include="Source\Shaders\ModelShader.frag" />
+    <None Include="Source\Shaders\ModelShader.vert" />
   </ItemGroup>
 </Project>
