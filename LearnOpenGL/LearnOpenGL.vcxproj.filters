@@ -55,5 +55,7 @@
     <None Include="Source\Shaders\CubeLamp.frag" />
     <None Include="Source\Shaders\ModelShader.frag" />
     <None Include="Source\Shaders\ModelShader.vert" />
+    <None Include="Source\Shaders\DepthShader.Vert" />
+    <None Include="Source\Shaders\DepthShader.frag" />
   </ItemGroup>
 </Project>

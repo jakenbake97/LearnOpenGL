@@ -54,11 +54,11 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		vector.z = mesh->mVertices[i].z;
 		vertex.position = vector;
 
-		// normal positions
-		vector.x = mesh->mNormals[i].x;
-		vector.y = mesh->mNormals[i].y;
-		vector.z = mesh->mNormals[i].z;
-		vertex.normal = vector;
+		//// normal positions
+		//vector.x = mesh->mNormals[i].x;
+		//vector.y = mesh->mNormals[i].y;
+		//vector.z = mesh->mNormals[i].z;
+		//vertex.normal = vector;
 
 		// texture coordinates
 		if (mesh->mTextureCoords[0])

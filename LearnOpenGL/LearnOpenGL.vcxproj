@@ -159,6 +159,8 @@
   <ItemGroup>
     <None Include="Source\Shaders\CubeLamp.frag" />
     <None Include="Source\Shaders\CubeLamp.vert" />
+    <None Include="Source\Shaders\DepthShader.frag" />
+    <None Include="Source\Shaders\DepthShader.Vert" />
     <None Include="Source\Shaders\fragmentShader.frag" />
     <None Include="Source\Shaders\ModelShader.frag" />
     <None Include="Source\Shaders\ModelShader.vert" />
