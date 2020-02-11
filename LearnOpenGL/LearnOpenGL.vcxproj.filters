@@ -57,5 +57,7 @@
     <None Include="Source\Shaders\ModelShader.vert" />
     <None Include="Source\Shaders\DepthShader.Vert" />
     <None Include="Source\Shaders\DepthShader.frag" />
+    <None Include="Source\Shaders\ShaderSingleColor.vert" />
+    <None Include="Source\Shaders\ShaderSingleColor.frag" />
   </ItemGroup>
 </Project>
