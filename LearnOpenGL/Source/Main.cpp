@@ -10,12 +10,12 @@
 #include "Model.h"
 #include "../Dependencies/stb_image.h"
 
-const unsigned int screen_width = 1920;
-const unsigned int screen_height = 1080;
+const unsigned int ScreenWidth = 1920;
+const unsigned int ScreenHeight = 1080;
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-float lastX = screen_width / 2;
-float lastY = screen_height / 2;
+float lastX = ScreenWidth / 2.0f;
+float lastY = ScreenHeight / 2.0f;
 bool firstMouse = true;
 
 float deltaTime = 0.0f;
@@ -57,12 +57,12 @@ void MouseCallback(GLFWwindow* window, const double xPos, const double yPos)
 	camera.ProcessMouseMovement(xOffset, yOffset);
 }
 
-void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+void ScrollCallback(GLFWwindow* window, const double xOffset, const double yOffset)
 {
 	camera.ProcessMouseScroll(yOffset);
 }
 
-unsigned int loadTexture(char const *path)
+unsigned int LoadTexture(char const *path)
 {
     unsigned int textureID;
     glGenTextures(1, &textureID);
@@ -106,7 +106,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, "LearnOpenGL", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(ScreenWidth, ScreenHeight, "LearnOpenGL", nullptr, nullptr);
 	if (window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -220,15 +220,15 @@ int main()
 
 	// load textures
     // -------------
-    unsigned int cubeTexture  = loadTexture("Resources/marble.jpg");
-    unsigned int floorTexture = loadTexture("Resources/metal.png");
+	const unsigned int cubeTexture  = LoadTexture("Resources/marble.jpg");
+	const unsigned int floorTexture = LoadTexture("Resources/metal.png");
 
     // shader configuration
     // --------------------
     shader.Use();
     shader.SetInt("texture1", 0);
 
-	//Model ourModel("resources/objects/sponza/sponza.obj");
+	Model ourModel("resources/objects/nanosuit/nanosuit.obj");
 
 	// render loop
 	while (!glfwWindowShouldClose(window))
@@ -247,7 +247,7 @@ int main()
 
 		singleColorShader.Use();
 		glm::mat4 view = camera.GetViewMatrix();
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)screen_width / (float) screen_height, 0.1f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)ScreenWidth / (float) ScreenHeight, 0.1f, 100.0f);
 		singleColorShader.SetMat4("view", view);
 		singleColorShader.SetMat4("projection", projection);
 		
@@ -301,8 +301,13 @@ int main()
 		glBindVertexArray(0);
 		glStencilMask(0xFF);
 		glEnable(GL_DEPTH_TEST);
-		
-		//ourModel.Draw(shader);
+
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0, -0.5f, 0));
+        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+        shader.SetMat4("model", model);
+		ourModel.Draw(shader);
 		
 		// check and call events and swap buffers
 		glfwPollEvents();

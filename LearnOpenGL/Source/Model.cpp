@@ -3,9 +3,9 @@
 
 void Model::Draw(Shader shader)
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
+	for (auto& mesh : meshes)
 	{
-		meshes[i].Draw(shader);
+		mesh.Draw(shader);
 	}
 }
 
@@ -46,7 +46,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		Vertex vertex;
+		Vertex vertex{};
 		glm::vec3 vector;
 		// vertex positions
 		vector.x = mesh->mVertices[i].x;
@@ -120,11 +120,11 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 		aiString str;
 		mat->GetTexture(type, i, &str);
 		bool skip = false;
-		for (unsigned int j = 0; j < texturesLoaded.size(); j++)
+		for (auto& texture : texturesLoaded)
 		{
-			if (std::strcmp(texturesLoaded[j].path.data(), str.C_Str()) == 0)
+			if (std::strcmp(texture.path.data(), str.C_Str()) == 0)
 			{
-				textures.push_back(texturesLoaded[j]);
+				textures.push_back(texture);
 				skip = true;
 				break;
 			}
@@ -157,9 +157,11 @@ unsigned Model::TextureFromFile(const char* path, const std::string& dictionary,
 		GLenum format;
 		if (numComponents == 1)
 			format = GL_RED;
+		else if (numComponents == 2)
+			format = GL_RG;
 		else if (numComponents == 3)
 			format = GL_RGB;
-		else if (numComponents == 4)
+		else
 			format = GL_RGBA;
 
 		glBindTexture(GL_TEXTURE_2D, textureID);
